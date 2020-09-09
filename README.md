@@ -1,24 +1,24 @@
 # zoe-calendar
 
-## Project setup
+## 安装依赖
 ```
-npm install
+npm install zoe-calendar
 ```
+## 引入依赖
+```
+import Vue from 'vue'
+import ZoeCalendar from 'zoe-calendar'
 
-### Compiles and hot-reloads for development
+Vue.use(ZoeCalendar)
 ```
-npm run serve
+## 使用
 ```
-
-### Compiles and minifies for production
+this.$calendar.show({
+  dateList: [
+    {date: '2020-09-09', desc: '班', disabled: false},
+    {date: '2020-09-10', desc: '班', disabled: false},
+    {date: '2020-09-11', desc: '班', disabled: false},
+    {date: '2020-09-12', desc: '休', disabled: true},
+  ]
+})
 ```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
