@@ -1,8 +1,8 @@
 {
   "name": "zoe-calendar",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": false,
-  "main": "lib/zoe-calendar.umd.js",
+  "main": "lib/zoe-calendar.umd.min.js",
   "description": "基于vue日历组件",
   "author": "uaison5460@gmail.com",
   "license": "MIT",

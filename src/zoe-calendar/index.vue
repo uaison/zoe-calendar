@@ -1,38 +1,36 @@
 <template>
-  <div class="zoe-calendar" id="bzCalendar">
-    <mt-popup v-model="visible" position="bottom" popup-transition="popup-slide-top" v-if="hasCalendar">
-      <div class="zoe-calendar-hd">
-        <div class="year">
-          <span class="previous" @click="previousYear"></span>{{currentYear}} 年<span class="next" @click="nextYear"></span>
-        </div>
-        <div class="month">
-          <span class="previous" @click="previousMonth"></span>{{currentMonth}} 月<span class="next" @click="nextMonth"></span>
-        </div>
+  <mt-popup v-model="visible" position="bottom" popup-transition="popup-slide-top" v-if="hasCalendar" class="zoe-calendar">
+    <div class="zoe-calendar-hd">
+      <div class="year">
+        <span class="previous" @click="previousYear"></span>{{currentYear}} 年<span class="next" @click="nextYear"></span>
       </div>
-      <div class="zoe-calendar-bd">
-        <div class="zoe-calendar-weekday">
-          <div class="zoe-calendar-weekday-item">周日</div>
-          <div class="zoe-calendar-weekday-item">周一</div>
-          <div class="zoe-calendar-weekday-item">周二</div>
-          <div class="zoe-calendar-weekday-item">周三</div>
-          <div class="zoe-calendar-weekday-item">周四</div>
-          <div class="zoe-calendar-weekday-item">周五</div>
-          <div class="zoe-calendar-weekday-item">周六</div>
-        </div>
-        <mt-swipe :auto="0" :show-indicators="false" :continuous="false" :defaultIndex="currentIndex" :stopPropagation="true" style="height: 310px" @change="changeMonth" ref="swipe">
-          <mt-swipe-item v-for="(month, index) in monthList" :key="`${month.month}_${index}`">
-            <div class="zoe-calendar-month">
-              <div class="zoe-calendar-day" v-for="item in month.dateList" :class="{'empty-day':item.space, 'today':item.today, 'active': item.date === currentDate.date, 'disabled': item.disabled}"
-                   @click="chooseDate(item)" :key="item.date">
-                <div class="day">{{item.date | calendar}}</div>
-                <div class="desc">{{(item.space || item.expired) ? '' : item.desc || ''}}</div>
-              </div>
+      <div class="month">
+        <span class="previous" @click="previousMonth"></span>{{currentMonth}} 月<span class="next" @click="nextMonth"></span>
+      </div>
+    </div>
+    <div class="zoe-calendar-bd">
+      <div class="zoe-calendar-weekday">
+        <div class="zoe-calendar-weekday-item">周日</div>
+        <div class="zoe-calendar-weekday-item">周一</div>
+        <div class="zoe-calendar-weekday-item">周二</div>
+        <div class="zoe-calendar-weekday-item">周三</div>
+        <div class="zoe-calendar-weekday-item">周四</div>
+        <div class="zoe-calendar-weekday-item">周五</div>
+        <div class="zoe-calendar-weekday-item">周六</div>
+      </div>
+      <mt-swipe :auto="0" :show-indicators="false" :continuous="false" :defaultIndex="currentIndex" :stopPropagation="true" style="height: 310px" @change="changeMonth" ref="swipe">
+        <mt-swipe-item v-for="(month, index) in monthList" :key="`${month.month}_${index}`">
+          <div class="zoe-calendar-month">
+            <div class="zoe-calendar-day" v-for="item in month.dateList" :class="{'empty-day':item.space, 'today':item.today, 'active': item.date === currentDate.date, 'disabled': item.disabled}"
+                 @click="chooseDate(item)" :key="item.date">
+              <div class="day">{{item.date | calendar}}</div>
+              <div class="desc">{{(item.space || item.expired) ? '' : item.desc || ''}}</div>
             </div>
-          </mt-swipe-item>
-        </mt-swipe>
-      </div>
-    </mt-popup>
-  </div>
+          </div>
+        </mt-swipe-item>
+      </mt-swipe>
+    </div>
+  </mt-popup>
 </template>
 
 <script>
@@ -247,7 +245,6 @@
       },
       // 切换月份
       changeMonth(index) {
-        console.log(index);
         this.currentYear = this.monthList[index].year;
         this.currentMonth = this.monthList[index].month;
         this.monthList[index].dateList.map(dateInfo => {
