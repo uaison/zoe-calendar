@@ -1,5 +1,5 @@
 <template>
-  <mt-popup v-model="visible" position="bottom" popup-transition="popup-slide-top" v-if="hasCalendar" class="zoe-calendar">
+  <mt-popup v-model="visible" position="bottom" popup-transition="popup-slide-top" class="zoe-calendar">
     <div class="zoe-calendar-hd">
       <div class="year">
         <span class="previous" @click="previousYear"></span>{{currentYear}} 年<span class="next" @click="nextYear"></span>
@@ -61,7 +61,6 @@
         currentDate: {},
         visible: false,
         currentIndex: dayjs().month(),
-        hasCalendar: false,
       };
     },
     created() {

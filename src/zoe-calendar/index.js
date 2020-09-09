@@ -24,7 +24,7 @@ export default {
           $vm.visible = false;
           options && options.onConfirm && options.onConfirm(val);
         });
-        $vm.hasCalendar = true;
+        $vm.changeMonth($vm.currentIndex);
         $vm.visible = true;
       },
       hide() {
