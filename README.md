@@ -8,6 +8,7 @@ npm install zoe-calendar
 ```
 import Vue from 'vue'
 import ZoeCalendar from 'zoe-calendar'
+import "zoe-calendar/lib/zoe-calendar.css"
 
 Vue.use(ZoeCalendar)
 ```
