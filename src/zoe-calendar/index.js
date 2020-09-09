@@ -20,8 +20,9 @@ export default {
         }
         $vm.$off('on-change');
         // 监听实例上的自定义事件,由emit触发
-        $vm.$on('on-change', () => {
+        $vm.$on('on-change', (val) => {
           $vm.visible = false;
+          options && options.onConfirm && options.onConfirm(val);
         });
         $vm.hasCalendar = true;
         $vm.visible = true;
