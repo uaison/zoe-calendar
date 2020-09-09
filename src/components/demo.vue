@@ -40,7 +40,9 @@
         },
         methods: {
             showCalendar() {
-                this.$calendar.show()
+                this.$calendar.show({
+                  dateList: this.dateList
+                })
             },
         },
     });

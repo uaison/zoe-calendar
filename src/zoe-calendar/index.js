@@ -18,6 +18,11 @@ export default {
         if (typeof options === 'object') {
           mergeOptions($vm, options)
         }
+        $vm.$off('on-change');
+        // 监听实例上的自定义事件,由emit触发
+        $vm.$on('on-change', () => {
+          $vm.visible = false;
+        });
         $vm.hasCalendar = true;
         $vm.visible = true;
       },

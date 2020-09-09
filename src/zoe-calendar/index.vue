@@ -18,17 +18,17 @@
         <div class="zoe-calendar-weekday-item">周五</div>
         <div class="zoe-calendar-weekday-item">周六</div>
       </div>
-      <mt-swipe :auto="0" :show-indicators="false" :continuous="false" :defaultIndex="currentIndex" :stopPropagation="true" style="height: 310px" @change="changeMonth" ref="swipe">
-        <mt-swipe-item v-for="(month, index) in monthList" :key="`${month.month}_${index}`">
-          <div class="zoe-calendar-month">
+      <div class="zoe-calendar-month-wrapper">
+        <div class="zoe-calendar-month-box" :style="{transform: `translateX(${xPosition})`}">
+          <div class="zoe-calendar-month" v-for="(month, index) in monthList" :key="`${month.month}_${index}`" :ref="`month-${index}`">
             <div class="zoe-calendar-day" v-for="item in month.dateList" :class="{'empty-day':item.space, 'today':item.today, 'active': item.date === currentDate.date, 'disabled': item.disabled}"
                  @click="chooseDate(item)" :key="item.date">
               <div class="day">{{item.date | calendar}}</div>
-              <div class="desc">{{(item.space || item.expired) ? '' : item.desc || ''}}</div>
+              <div class="desc">{{(item.space || item.expired) ? ' ' : item.desc || ' '}}</div>
             </div>
           </div>
-        </mt-swipe-item>
-      </mt-swipe>
+        </div>
+      </div>
     </div>
   </mt-popup>
 </template>
@@ -36,16 +36,10 @@
 <script>
   import dayjs from 'dayjs';
   import MtPopup from 'mint-ui/lib/popup';
-  import MtSwipe from 'mint-ui/lib/swipe';
-  import MtSwipeItem from 'mint-ui/lib/swipe-item';
   import 'mint-ui/lib/popup/style.css';
-  import 'mint-ui/lib/swipe/style.css';
-  import 'mint-ui/lib/swipe-item/style.css';
 
   export default {
     components: {
-      MtSwipeItem,
-      MtSwipe,
       MtPopup,
     },
     name: 'zoe-calendar',
@@ -76,6 +70,11 @@
     filters: {
       calendar(value) {
         return (new Date(value).getDate());
+      },
+    },
+    computed: {
+      xPosition() {
+        return '-' + (this.currentIndex * (window.innerWidth -4)) + 'px';
       },
     },
     methods: {
@@ -120,7 +119,7 @@
             date: date.format('YYYY-MM-DD'),
             weekday: +date.format('d'),
             expired: date.isBefore(today),
-            desc: '　',
+            desc: '',
             disabled: this.dateList.length > 0 ? true : date.isBefore(today),
             today: date.isSame(today),
           };
@@ -148,7 +147,7 @@
                 date: date.format('YYYY-MM-DD'),
                 weekday: +date.format('d'),
                 expired: date.isBefore(today),
-                desc: '　',
+                desc: '',
                 disabled: this.dateList.length > 0 ? true : date.isBefore(today),
                 today: date.isSame(today),
                 space: true,
@@ -167,7 +166,7 @@
                 date: date.format('YYYY-MM-DD'),
                 weekday: +date.format('d'),
                 expired: date.isBefore(today),
-                desc: '　',
+                desc: '',
                 disabled: this.dateList.length > 0 ? true : date.isBefore(today),
                 today: date.isSame(today),
                 space: true,
@@ -238,10 +237,7 @@
             .set('month', this.currentMonth - 1).endOf('month'))) {
           this.nextMonth();
         }
-        this.$emit('chooseDate', this.currentDate);
-        this.$nextTick(() => {
-          this.visible = false;
-        });
+        this.$emit('on-change', this.currentDate);
       },
       // 切换月份
       changeMonth(index) {
@@ -251,10 +247,11 @@
           const dateObj = this.dateList.find((item) => item.date === dateInfo.date);
           if (dateObj) {
             Object.assign(dateInfo, dateObj);
+          } else {
+            dateInfo.disabled = true;
           }
         });
         this.currentIndex = index;
-        this.$refs.swipe.swipeItemCreated();
 
         const monthIndex =
           this.monthList.findIndex((item) => item.year === this.currentYear && item.month === this.currentMonth);
@@ -280,7 +277,7 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-    padding: .5em;
+    padding: 16px;
     background: #f5f5f5;
   }
 
@@ -317,6 +314,17 @@
     box-sizing: border-box;
     padding: 1em 0;
     text-align: center;
+  }
+
+  .zoe-calendar-month-wrapper {
+    width: 100vw;
+    overflow: hidden;
+  }
+
+  .zoe-calendar-month-box {
+    display: flex;
+    flex-basis: 100vw;
+    transition: .25s linear;
   }
 
   .zoe-calendar-month {
