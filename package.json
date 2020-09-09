@@ -4,6 +4,12 @@
   "private": false,
   "main": "lib/zoe-calendar.umd.js",
   "description": "基于vue日历组件",
+  "author": "uaison5460@gmail.com",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/uaison/zoe-calendar"
+  },
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
