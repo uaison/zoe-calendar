@@ -265,7 +265,7 @@
   };
 </script>
 
-<style>
+<style scoped>
   .zoe-calendar {
     cursor: default;
     background: #fff;
